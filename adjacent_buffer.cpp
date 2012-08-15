@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 //patch
+#define SUPER_AGGRESSIVE_STACK_CHECKING
 #include "secure.h"
 
 int a(){

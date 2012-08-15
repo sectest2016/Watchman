@@ -7,7 +7,7 @@
 #define UNSAFE_SIZEOF(array) (sizeof(array)/sizeof(*(array)))
 
 inline void sprintf_check_setup(char *dest, const char *fmt, ...) {
-        printf("destination at address %x\n", dest);
+        printf("destination at address %x\n", (int)dest);
 	void* nextHighestAddress = 0x0; 
 	int params = 0;
 	for(int i = 0; fmt[i]; i++){
@@ -33,5 +33,7 @@ inline void sprintf_check_setup(char *dest, const char *fmt, ...) {
 			STACK_CHECK_FAIL;
 	}
 	
+	sprintf(dest, fmt, args);
+
 	va_end (args);
 }

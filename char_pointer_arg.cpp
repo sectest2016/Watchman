@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 //patch
-#include "secure.h"
 #define AGGRESSIVE_STACK_CHECKING
+#include "secure.h"
 
 int a(char* buff2){
     char buff[10];

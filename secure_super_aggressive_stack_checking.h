@@ -11,7 +11,6 @@ scanf_check_setup(__VA_ARGS__); \
 scanf(__VA_ARGS__); \*/
 
 #define sprintf(...) \
-sprintf(__VA_ARGS__); \
 sprintf_check_setup(__VA_ARGS__); 
 
 #endif /*SUPER_AGGRESSIVE_STACK_CHECKING*/
