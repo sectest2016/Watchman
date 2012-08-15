@@ -5,15 +5,11 @@
 #include "secure.h"
 
 int a(){
-    char buff[10] = "test1";
-    char buff2[10] = "test2";
-    char buff3[20];
-    char buff4[10] = "dir"; //works on windows and linux!
-    //scanf("%s%10c", buff, buff2);
-    for(int i = 0; i < 10; i++)//{
-    	sprintf(buff3, "%s %s", buff, buff2);
-    //}
-    system(buff4);
+    char buff_bad[25] = "aaaaaaaaaawhoami";
+    char buff[10];
+    char buff2[10] = "dir"; //works on windows and linux!
+    sprintf(buff, "%s", buff_bad);
+    system(buff2);
 }
 
 int main(){
