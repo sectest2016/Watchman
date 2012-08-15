@@ -20,6 +20,10 @@ STACK_CHECK
 gets(__VA_ARGS__); \
 STACK_CHECK
 
+#define sprintf(...) \
+sprintf(__VA_ARGS__); \
+STACK_CHECK
+
 #endif /*AGGRESSIVE_STACK_CHECKING*/
 
 

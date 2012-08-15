@@ -11,11 +11,11 @@
 
 //-----------------------------
 //-----------------------------
-//configure
+//configure (put these in your main if you want them)
 //-----------------------------
 //-----------------------------
 //#define AGGRESSIVE_STACK_CHECKING
-#define SUPER_AGGRESSIVE_STACK_CHECKING
+//#define SUPER_AGGRESSIVE_STACK_CHECKING
 //#define INSTRUMENTATION
 
 //more parts of the library
