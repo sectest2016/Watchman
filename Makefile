@@ -1,11 +1,9 @@
 main:
-	g++ -g -o first -fstack-protector-all firstexample.cpp #-finstrument-functions
+	g++ -g -o benchmark -fstack-protector-all benchmark.cpp #-finstrument-functions
+	g++ -g -o security_check -fstack-protector-all benchmark.cpp #-finstrument-functions
 
 pre:
-	gcc firstexample.cpp -E >> out.cpp 
+	gcc security_check.cpp -E >> out.cpp 
 
 clean:
-	rm -f first out.cpp
-
-test:
-	time ./first
+	rm -f security_check benchmark out.cpp
