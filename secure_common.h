@@ -6,6 +6,7 @@
 
 #define UNSAFE_SIZEOF(array) (sizeof(array)/sizeof(*(array)))
 
+//XXX this isn't going to work, (arguments could be pointers into the same array)
 inline void sprintf_check_setup(char *dest, const char *fmt, ...) {
         printf("destination at address %x\n", (int)dest);
 	void* nextHighestAddress = 0x0; 
