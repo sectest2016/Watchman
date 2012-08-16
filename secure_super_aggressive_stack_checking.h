@@ -9,18 +9,24 @@
 //option 1, precesion but more modifications to original code
 //TODO calculate how large we can actually make this?
 #define MANUAL_STACK_COOKIE(buffer) \
-char COOKIE##buffer[sizeof(_x)/sizeof(_x[0])] = { 0x00 };
+char COOKIE##buffer[sizeof(_x)/sizeof(_x[0])] = { 0x00, 0xff, 0xff, 0xff };
 
 //option 2, brute force
 //TODO options for sizes?
-/*#define MANUAL_STACK_COOKIES \
+//#define MANUAL_STACK_COOKIE(size) \
+//char COOKIE##size[size] = { 0x00, 0xff, 0xff, 0xff }; \
+
+#define SHOTGUN_STACK_COOKIES \
 char COOKIE1[1] = { 0x00 }; \
 char COOKIE2[2] = { 0x00, 0xff }; \
 char COOKIE4[4] = { 0x00, 0xff, 0xff, 0xff }; \
+char COOKIE6[6] = { 0x00, 0xff, 0xff, 0xff }; \
 char COOKIE8[8] = { 0x00, 0xff, 0xff, 0xff }; \ 
+char COOKIE10[10] = { 0x00, 0xff, 0xff, 0xff }; \ 
 char COOKIE16[16] = { 0x00, 0xff, 0xff, 0xff }; \
 char COOKIE32[32] = { 0x00, 0xff, 0xff, 0xff }; \
-char COOKIE64[64] = { 0x00, 0xff, 0xff, 0xff }*/ 
+char COOKIE64[64] = { 0x00, 0xff, 0xff, 0xff }; \
+void* COOKIES[9]  = {COOKIE1, COOKIE2, COOKIE4, COOKIE6, COOKIE8}
 
 //# define MANUAL_AGGRESSIVE_STACK_CHECK \
 //if all cookies don't match, fail stack check
