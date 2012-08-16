@@ -4,6 +4,18 @@
 //-----------------------------
 //-----------------------------
 
+//TODO make a honey pot stack check fail
+
+/*void * __stack_chk_guard = NULL;
+ 
+void __stack_chk_guard_setup()
+{
+    unsigned char * p;
+    p = (unsigned char *) &__stack_chk_guard;
+ 
+    *p =  0x00000aff;
+}*/
+
 #define STACK_CHK_FAIL_ASM "CALL __stack_chk_fail\n"
 
 #ifdef __i386__
@@ -44,3 +56,4 @@ STACK_CHK_FAIL_ASM \
 __asm__ __volatile__( \
 STACK_CHECK_ASM \
 ) 
+
