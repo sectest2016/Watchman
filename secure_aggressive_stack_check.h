@@ -3,7 +3,6 @@
 //apply the stack check a few more places
 //-----------------------------
 //-----------------------------
-#ifdef AGGRESSIVE_STACK_CHECKING 
 #warning "AGGRESSIVE_STACK_CHECKING on, this may impact performance"
 
 //XXX these may not trigger in time with for loops that don't have parens
@@ -23,7 +22,4 @@ STACK_CHECK
 #define sprintf(...) \
 sprintf(__VA_ARGS__); \
 STACK_CHECK
-
-#endif /*AGGRESSIVE_STACK_CHECKING*/
-
 

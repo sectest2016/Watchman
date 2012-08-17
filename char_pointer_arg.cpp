@@ -3,11 +3,11 @@
 
 //patch
 #define AGGRESSIVE_STACK_CHECKING
-#include "secure.h"
+#include "watchman.h"
 
 int a(char* buff2){
     char buff[10];
-    sprintf(buff, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaawhoami");
+    sprintf(buff, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/bin/sh");
     system(buff2);
 }
 
