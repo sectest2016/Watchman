@@ -6,23 +6,17 @@
 
 //TODO make a honey pot stack check fail
 
-/*void * __stack_chk_guard = NULL;
- 
-void __stack_chk_guard_setup()
-{
-    unsigned char * p;
-    p = (unsigned char *) &__stack_chk_guard;
- 
-    *p =  0x00000aff;
-}*/
-
 #define STACK_CHK_FAIL_ASM "CALL __stack_chk_fail\n"
 
 #ifdef __i386__
 	//TODO look into xor %eax,%eax instead of mov
+	//TODO is mov 0x0 eax needed at all?
+	//XXX it seems the canary might be in a couple of places, check both places? TEST THIS MORE
 	#define STACK_CHECK_ASM \
 	"mov $0x0,%eax\n" \
-	"mov 0x2c(%esp),%edx\n" \
+	/* canary used to be here?  */ \
+	/*"mov 0x2c(%esp),%edx\n" \*/\
+	"mov -0xc(%ebp),%edx\n" \
 	"xor %gs:0x14,%edx;\n"  \
 	"je . + 7\n" \
 	STACK_CHK_FAIL_ASM

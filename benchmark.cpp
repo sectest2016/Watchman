@@ -7,9 +7,22 @@
 #define AGGRESSIVE_STACK_CHECKING
 #include "watchman.h"
 
+void b(){
+    int iterations = 10;
+    int i; 
+    char buff[10] = "test1";
+    char buff2[10] = "test2";
+    char buff3[10] = "aaaaaaaaa";
+
+    for(i = 0; i < iterations; i++)//{
+    	sprintf(buff2, "%s", buff);
+    //}
+}
+
 int a(){
     struct timeval start, end;
-    int iterations = 1000000000;
+    //int iterations = 1000000000;
+    int iterations = 1000;
     int i;
     char buff[10] = "test1";
     char buff2[10] = "test2";
@@ -33,4 +46,5 @@ int a(){
 
 int main(){
 	a();
+	b();
 }

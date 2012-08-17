@@ -20,6 +20,6 @@ gets(__VA_ARGS__); \
 STACK_CHECK
 
 #define sprintf(...) \
-sprintf(__VA_ARGS__); \
-STACK_CHECK
+{ sprintf(__VA_ARGS__);  \
+STACK_CHECK; }
 
