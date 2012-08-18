@@ -13,6 +13,7 @@ char COOKIE##buffer[sizeof(_x)/sizeof(_x[0])] = { 0x00, 0xff, 0xff, 0xff };
 //option 2, brute force
 //XXX generate random numbers
 //FIXME use mprotect http://en.wikibooks.org/wiki/C_Programming/POSIX_Reference/sys/mman.h/mprotect
+//FIXME also look at http://www.kernel.org/doc/man-pages/online/pages/man2/mprotect.2.html
 #define SHOTGUN_STACK_COOKIES \
 int ___numCookies = 7; \
 char ___COOKIE4[4] = { 0x00, 0xff, 0xff, 0xff }; \
