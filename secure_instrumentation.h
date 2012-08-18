@@ -15,25 +15,29 @@ unsigned int canary;
 ___Canary* test;
 
 public:
+	
+	___Canary() __attribute__ ((no_instrument_function));
+	
+	//void ___Canary() __attribute__ ((no_instrument_function, alias ("___Canary")));
 
-	___Canary(){
-		srand(time(NULL));
-		//canary = rand() % UINT_MAX + 1;
-		canary = 0xffffffff;
-		test = new ___Canary(canary);
-	}
+	//___Canary(unsigned int test) : test(NULL), canary(test) __attribute__ ((no_instrument_function));
 
-	___Canary(unsigned int test) : test(NULL), canary(test){
-
-	}
-
-	void check(){
+	/*void check(){
 		if(test != NULL){
 			
 		}
-	}
+	}*/
 
 };
+
+___Canary :: ___Canary() 
+{
+	srand(time(NULL));
+	//canary = rand() % UINT_MAX + 1;
+	canary = 0xffffffff;
+	test = NULL;
+	//test = new ___Canary(canary);
+}
 
 void __cyg_profile_func_enter(void *this_fn, void *call_site)
                               __attribute__((no_instrument_function));
