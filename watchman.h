@@ -17,6 +17,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+/*
+Who compiles your compiler?
+*/
+
 #ifndef WATCHMAN
 #define WATCHMAN
 
@@ -41,10 +45,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //XXX is this needed?
 //#include "secure_instrumentation.h"
 
-#ifdef AGGRESSIVE_HEAP_CHECKING 
-#include "secure_object_protection.h"
-#endif /*AGGRESSIVE_HEAP_CHECKING*/
-
 #ifdef AGGRESSIVE_STACK_CHECKING 
 #include "secure_aggressive_stack_check.h"
 #endif /*AGGRESSIVE_STACK_CHECKING*/
@@ -53,5 +53,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifdef SUPER_AGGRESSIVE_STACK_CHECKING 
 #include "paid_secure_super_aggressive_stack_checking.h"
 #endif /*SUPER_AGGRESSIVE_STACK_CHECKING*/
+
+//XXX PAID
+#ifdef AGGRESSIVE_HEAP_CHECKING 
+#include "secure_object_protection.h"
+#endif /*AGGRESSIVE_HEAP_CHECKING*/
 
 #endif /*WATCHMAN*/

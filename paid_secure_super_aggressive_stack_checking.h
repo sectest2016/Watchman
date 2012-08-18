@@ -11,10 +11,8 @@
 char COOKIE##buffer[sizeof(_x)/sizeof(_x[0])] = { 0x00, 0xff, 0xff, 0xff };
 
 //option 2, brute force
-//TODO options for sizes?
-//#define MANUAL_STACK_COOKIE(size) \
-//char COOKIE##size[size] = { 0x00, 0xff, 0xff, 0xff }; \
-
+//XXX generate random numbers
+//FIXME use mprotect http://en.wikibooks.org/wiki/C_Programming/POSIX_Reference/sys/mman.h/mprotect
 #define SHOTGUN_STACK_COOKIES \
 int ___numCookies = 7; \
 char ___COOKIE4[4] = { 0x00, 0xff, 0xff, 0xff }; \
@@ -26,7 +24,7 @@ char ___COOKIE32[32] = { 0x00, 0xff, 0xff, 0xff }; \
 char ___COOKIE64[64] = { 0x00, 0xff, 0xff, 0xff }; \
 char* ___COOKIES[]  = {___COOKIE4, ___COOKIE6, ___COOKIE8, ___COOKIE10, ___COOKIE16, ___COOKIE16, ___COOKIE32, ___COOKIE64}
 
-#define CHECK_SHOTGUT_STACK_COOKIES \
+#define CHECK_SHOTGUN_STACK_COOKIES \
 for(int ___onCookie = 0; ___onCookie < ___numCookies; ___onCookie++){ \
  if(___COOKIES[___onCookie][0] != 0x00)\
 	__asm__ (STACK_CHK_FAIL_ASM); \
@@ -42,5 +40,5 @@ scanf(__VA_ARGS__); \*/
 
 #define sprintf(...) \
 sprintf(__VA_ARGS__); \
-CHECK_SHOTGUT_STACK_COOKIES
+CHECK_SHOTGUN_STACK_COOKIES
 
