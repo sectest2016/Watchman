@@ -40,8 +40,7 @@ void b(){
 
 int a(){
     struct timeval start, end;
-    //int iterations = 1000000000;
-    int iterations = 1000;
+    int iterations = 1000000000;
     int i;
     char buff[10] = "test1";
     char buff2[10] = "test2";
@@ -52,7 +51,7 @@ int a(){
     	sprintf(buff2, "%s", buff);
     //}
     gettimeofday(&end, NULL);
-    printf ("It took %ld seconds to run secure version of %i sprintfs.\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)), iterations);
+    printf ("It took %ld seconds to run secure version of %i sprintfs.\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)) / 100000, iterations);
 
     #undef sprintf
     gettimeofday(&start, NULL);
@@ -60,7 +59,7 @@ int a(){
     	sprintf(buff2, "%s", buff);
     //}
     gettimeofday(&end, NULL);
-    printf ("It took %ld seconds to run unsecure version of %i sprintfs.\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)), iterations);
+    printf ("It took %ld seconds to run unsecure version of %i sprintfs.\n", ((end.tv_sec * 1000000 + end.tv_usec) - (start.tv_sec * 1000000 + start.tv_usec)) / 100000, iterations);
 }
 
 int main(){
