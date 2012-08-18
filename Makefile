@@ -12,8 +12,8 @@ char_pointer_arg:
 	gcc -I./ tests/char_pointer_arg.cpp -E >> char_pointer_arg_expanded.cpp 
 
 heap:
-	g++ -I./ -g -o heap.bin -fstack-protector-all tests/heap.cpp #-finstrument-functions
-	gcc -I./ tests/heap.cpp -E >> heap.cpp
+	g++ -I./ -g -o heap.bin -fstack-protector-all tests/heap.cpp -finstrument-functions
+	gcc -I./ tests/heap.cpp -E >> heap_expanded.cpp
 
 benchmark:
 	g++ -I./ -g -o benchmark.bin -fstack-protector-all tests/benchmark.cpp #-finstrument-functions

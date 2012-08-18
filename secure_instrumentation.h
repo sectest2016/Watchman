@@ -18,7 +18,8 @@ public:
 
 	___Canary(){
 		srand(time(NULL));
-		canary = rand() % UINT_MAX + 1;
+		//canary = rand() % UINT_MAX + 1;
+		canary = 0xffffffff;
 		test = new ___Canary(canary);
 	}
 
@@ -28,7 +29,7 @@ public:
 
 	void check(){
 		if(test != NULL){
-		
+			
 		}
 	}
 
