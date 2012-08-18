@@ -42,9 +42,6 @@ Who compiles your compiler?
 #include "secure_manual_stack_check.h"
 #include "secure_common.h"
 
-//XXX is this needed?
-//#include "secure_instrumentation.h"
-
 #ifdef AGGRESSIVE_STACK_CHECKING 
 #include "secure_aggressive_stack_check.h"
 #endif /*AGGRESSIVE_STACK_CHECKING*/
@@ -54,9 +51,14 @@ Who compiles your compiler?
 #include "paid_secure_super_aggressive_stack_checking.h"
 #endif /*SUPER_AGGRESSIVE_STACK_CHECKING*/
 
-//XXX PAID
+//XXX PAID?
 #ifdef AGGRESSIVE_HEAP_CHECKING 
 #include "secure_object_protection.h"
 #endif /*AGGRESSIVE_HEAP_CHECKING*/
+
+//XXX PAID?
+#ifdef SUPER_AGGRESSIVE_HEAP_CHECKING 
+#include "secure_instrumentation.h"
+#endif /*SUPER_AGGRESSIVE_HEAP_CHECKING*/
 
 #endif /*WATCHMAN*/
