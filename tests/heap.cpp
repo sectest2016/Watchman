@@ -40,7 +40,6 @@ int main(){
 	Command* c4 = new Command();
 	free(c1);
 	aTest->a();
-	c1->a();
 	c2->a();
 	c3->a();
 	c4->a();
