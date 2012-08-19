@@ -26,4 +26,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define UNSAFE_SIZEOF(array) (sizeof(array)/sizeof(*(array)))
 
+void
+__attribute__ ((noreturn))
+pwned(char* msg)
+{
+	printf("*** Watchman: %s ***: program terminated\n", msg);
+	exit(1);
+}
+
 //XXX make a list of all unsafe functions to protect here
