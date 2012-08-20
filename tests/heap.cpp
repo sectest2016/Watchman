@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SUPER_AGGRESSIVE_HEAP_CHECKING
+#define SUPER_AGGRESSIVE_HEAP_CHECKING_C
+//#define SUPER_AGGRESSIVE_HEAP_CHECKING_CPP
 #include "watchman.h"
 
 class Test{

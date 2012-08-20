@@ -51,14 +51,17 @@ Who compiles your compiler?
 #include "paid_secure_super_aggressive_stack_checking.h"
 #endif /*SUPER_AGGRESSIVE_STACK_CHECKING*/
 
-//XXX PAID?
 #ifdef AGGRESSIVE_HEAP_CHECKING 
 #include "secure_object_protection.h"
 #endif /*AGGRESSIVE_HEAP_CHECKING*/
 
-//XXX PAID?
-#ifdef SUPER_AGGRESSIVE_HEAP_CHECKING 
+//XXX PAID
+#ifdef SUPER_AGGRESSIVE_HEAP_CHECKING_C
+#include "secure_instrumentation_c.h"
+#endif /*SUPER_AGGRESSIVE_HEAP_CHECKING_CPP*/
+
+#ifdef SUPER_AGGRESSIVE_HEAP_CHECKING_CPP 
 #include "secure_instrumentation.h"
-#endif /*SUPER_AGGRESSIVE_HEAP_CHECKING*/
+#endif /*SUPER_AGGRESSIVE_HEAP_CHECKING_CPP*/
 
 #endif /*WATCHMAN*/
