@@ -8,6 +8,13 @@
 #include <time.h>
 #include <limits.h>
 
+//option 1
+//XXX pull down pointers to common malloc functions
+//XXX only setup heap canaries when those are called?
+
+//option 3 
+//XXX only do this every other function call
+
 #define ___MAX_CANARIES 10000
 static unsigned int executionCanary = 0x0;
 
