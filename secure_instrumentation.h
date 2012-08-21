@@ -75,7 +75,8 @@ void __cyg_profile_func_exit(void *this_fn, void *call_site) {
 	//printf("EXIT:  %p, from %p\n", this_fn, call_site);
 	if(numCanaries != ___MAX_CANARIES && canaryOverflow == 0){
 		canaries[numCanaries-1]->check();  
-		free(canaries[numCanaries]);
+		free(canaries[numCanaries-1]);
+		canaries[numCanaries-1] = 0x0;
 		numCanaries--;
 	}
 	else{

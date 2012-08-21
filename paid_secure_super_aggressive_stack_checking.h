@@ -26,6 +26,10 @@ char ___COOKIE32[32] = { 0x00, 0xff, 0xff, 0xff }; \
 char ___COOKIE64[64] = { 0x00, 0xff, 0xff, 0xff }; \
 char* ___COOKIES[]  = {___COOKIE4, ___COOKIE6, ___COOKIE8, ___COOKIE10, ___COOKIE16, ___COOKIE16, ___COOKIE32, ___COOKIE64}
 
+//option 3
+//XXX use alloca to dynamically allocate cookie on stack? possibly use instrumentation
+//XXX shotgun technique could then be moved to the free version
+
 #define CHECK_SHOTGUN_STACK_COOKIES \
 for(int ___onCookie = 0; ___onCookie < ___numCookies; ___onCookie++){ \
 if(___COOKIES[___onCookie][0] != 0x00)\
