@@ -57,9 +57,10 @@ Who compiles your compiler?
 
 //XXX PAID
 #ifdef SUPER_AGGRESSIVE_HEAP_CHECKING_C
-#include "secure_instrumentation_c.h"
+#include "paid_secure_instrumentation_c.h"
 #endif /*SUPER_AGGRESSIVE_HEAP_CHECKING_CPP*/
 
+//XXX PAID? not going in 0.1
 #ifdef SUPER_AGGRESSIVE_HEAP_CHECKING_CPP 
 #include "secure_instrumentation.h"
 #endif /*SUPER_AGGRESSIVE_HEAP_CHECKING_CPP*/
