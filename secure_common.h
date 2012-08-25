@@ -17,6 +17,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 //-----------------------------
 //-----------------------------
@@ -30,7 +33,8 @@ void
 __attribute__ ((noreturn))
 pwned(char* msg)
 {
-	printf("*** Watchman: %s ***: program terminated\n", msg);
+	FILE* ttyfd = fopen("/dev/tty", "w");
+	fprintf(ttyfd, "*** Watchman: %s ***: program terminated\n", msg);
 	exit(1);
 }
 
