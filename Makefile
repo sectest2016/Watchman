@@ -16,8 +16,8 @@ heap:
 	gcc -I./ tests/paid_heap.cpp -E >> heap_expanded.cpp
 
 benchmark:
-	g++ -I./ -g -o benchmark.bin -fstack-protector-all tests/benchmark.cpp #-finstrument-functions
+	g++ -I./ -g -o benchmark -fstack-protector-all tests/benchmark.cpp #-finstrument-functions
 	gcc -I./ tests/benchmark.cpp -E >> benchmark_expanded.cpp 
 
 clean:
-	rm -f *.bin *_expanded.cpp
+	rm -f *.bin *_expanded.cpp benchmark

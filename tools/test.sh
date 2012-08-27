@@ -1,9 +1,26 @@
-#!/bin/sh
-RET=1
-while true; do 
-	OUT=$(./a.out < input2 &2>1)
+#!/bin/bash
+
+make
+#TESTS=(`ls *.bin`)
+TESTS=`ls *.bin`
+#TESTS=$(`ls . \| grep *.bin`)
+
+echo "..."
+echo "..."
+echo "..."
+echo "..."
+
+#RET=1
+#while true; do 
+for test in $TESTS; do
+	echo "Running test $test..."
+	OUT=(`./$test`)
 	#RET=$($?)
-	if [ "$?" = "0" ] ; then
-		echo $OUT
+	if [ "$?" != "0" ] ; then
+		echo "PASS"
+	else
+		echo "FAIL"
 	fi
 done
+
+make clean
