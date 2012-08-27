@@ -56,8 +56,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #elif defined __ia64__
 	#warning "secure.h not currenty implemented for ia64"
 #else
-	extern uintptr_t __stack_chk_guard;
-	# define STACK_CHK_GUARD __stack_chk_guard
+	#warning "secure.h not currenty implemented for this architecture"
 #endif
 
 #define STACK_CHECK_FAIL \

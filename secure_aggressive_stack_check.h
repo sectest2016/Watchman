@@ -7,19 +7,40 @@
 
 //XXX these may not trigger in time with for loops that don't have parens
 
-#define scanf(...) \
-scanf(__VA_ARGS__); \
-STACK_CHECK
+#define fgets(...) \
+{ fgets(__VA_ARGS__); \
+STACK_CHECK; }
 
 #define fscanf(...) \
-fscanf(__VA_ARGS__); \
-STACK_CHECK
+{ fscanf(__VA_ARGS__); \
+STACK_CHECK; }
 
+#define fwrite(...) \
+{ fwrite(__VA_ARGS__); \
+STACK_CHECK; }
+
+//XXX is this needed?
 #define gets(...) \
-gets(__VA_ARGS__); \
-STACK_CHECK
+{ gets(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define scanf(...) \
+{ scanf(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define sscanf(...) \
+{ sscanf(__VA_ARGS__); \
+STACK_CHECK; }
 
 #define sprintf(...) \
-{ sprintf(__VA_ARGS__);  \
+{ sprintf(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define vfprintf(...) \
+{ vfprintf(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define vsprintf(...) \
+{ vsprintf(__VA_ARGS__); \
 STACK_CHECK; }
 
