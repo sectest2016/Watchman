@@ -36,6 +36,8 @@ Who compiles your compiler?
 //#define AGGRESSIVE_STACK_CHECKING
 //#define SUPER_AGGRESSIVE_STACK_CHECKING
 //#define AGGRESSIVE_HEAP_CHECKING
+//#define SUPER_AGGRESSIVE_HEAP_CHECKING_C
+//#define SUPER_AGGRESSIVE_HEAP_CHECKING_CPP
 //#define INSTRUMENTATION
 
 //more parts of the library
@@ -51,18 +53,19 @@ Who compiles your compiler?
 #include "paid_secure_super_aggressive_stack_checking.h"
 #endif /*SUPER_AGGRESSIVE_STACK_CHECKING*/
 
+//XXX not implemented, also probably the wrong configation name
 #ifdef AGGRESSIVE_HEAP_CHECKING 
-#include "secure_object_protection.h"
+#include "paid_secure_object_protection.h"
 #endif /*AGGRESSIVE_HEAP_CHECKING*/
 
 //XXX PAID
 #ifdef SUPER_AGGRESSIVE_HEAP_CHECKING_C
-#include "paid_secure_instrumentation_c.h"
+#include "paid_secure_heap_instrumentation_c.h"
 #endif /*SUPER_AGGRESSIVE_HEAP_CHECKING_CPP*/
 
-//XXX PAID? not going in 0.1
+//XXX PAID? not going in 0.1, but might be free after that
 #ifdef SUPER_AGGRESSIVE_HEAP_CHECKING_CPP 
-#include "secure_instrumentation.h"
+#include "paid_secure_heap_instrumentation_cpp.h"
 #endif /*SUPER_AGGRESSIVE_HEAP_CHECKING_CPP*/
 
 #endif /*WATCHMAN*/

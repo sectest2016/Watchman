@@ -20,4 +20,4 @@ benchmark:
 	gcc -I./ tests/benchmark.cpp -E >> benchmark_expanded.cpp 
 
 clean:
-	rm -f *.bin *_expanded.cpp
+	rm -f *.bin *_expanded.cpp benchmark
