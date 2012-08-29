@@ -5,8 +5,6 @@
 //-----------------------------
 #warning "AGGRESSIVE_STACK_CHECKING on, this may impact performance"
 
-//XXX these may not trigger in time with for loops that don't have parens
-
 #define fgets(...) \
 { fgets(__VA_ARGS__); \
 STACK_CHECK; }
@@ -28,12 +26,36 @@ STACK_CHECK; }
 { scanf(__VA_ARGS__); \
 STACK_CHECK; }
 
+#define sprintf(...) \
+{ sprintf(__VA_ARGS__); \
+STACK_CHECK; }
+
 #define sscanf(...) \
 { sscanf(__VA_ARGS__); \
 STACK_CHECK; }
 
-#define sprintf(...) \
-{ sprintf(__VA_ARGS__); \
+#define strcat(...) \
+{ strcat(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define strcpy(...) \
+{ strcpy(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define strecpy(...) \
+{ strecpy(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define streadd(...) \
+{ streadd(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define strcat(...) \
+{ strcat(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define strtrns(...) \
+{ strtrns(__VA_ARGS__); \
 STACK_CHECK; }
 
 #define vfprintf(...) \

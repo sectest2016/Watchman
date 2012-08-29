@@ -64,12 +64,36 @@ STACK_CHECK; }
 { scanf(__VA_ARGS__); \
 STACK_CHECK; }
 
+#define sprintf(...) \
+{ sprintf(__VA_ARGS__); \
+STACK_CHECK; }
+
 #define sscanf(...) \
 { sscanf(__VA_ARGS__); \
 STACK_CHECK; }
 
-#define sprintf(...) \
-{ sprintf(__VA_ARGS__); \
+#define strcat(...) \
+{ strcat(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define strcpy(...) \
+{ strcpy(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define strecpy(...) \
+{ strecpy(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define streadd(...) \
+{ streadd(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define strcat(...) \
+{ strcat(__VA_ARGS__); \
+STACK_CHECK; }
+
+#define strtrns(...) \
+{ strtrns(__VA_ARGS__); \
 STACK_CHECK; }
 
 #define vfprintf(...) \
