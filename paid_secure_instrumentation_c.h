@@ -8,6 +8,18 @@
 #include <time.h>
 #include <limits.h>
 
+//XXX override _start to enable early mcheck
+//XXX http://learningpearls.blogspot.com/2011/02/start-function-inside-c.html
+//XXX watermk in here too? call to something like this from overriden _start
+
+__asm__ __volatile__(
+"nop\n"
+"xor %gs:0x14,%edx;\n" 
+"nop\n"
+"xor %gs:0x14,%edx;\n" 
+"nop\n"
+);
+
 //XXX option 1
 //XXX pull down pointers to common malloc functions
 //XXX only setup heap canaries when those are called?
