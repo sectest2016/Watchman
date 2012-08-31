@@ -6,6 +6,7 @@ rm ./*/paid_*
 rm readme
 rm Makefile
 mv freeMakefile Makefile
+rm -rf ./scratch/
 
 LICENSE=$(cat license)
 
