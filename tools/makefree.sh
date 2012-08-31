@@ -7,7 +7,7 @@ rm readme
 rm Makefile
 mv freeMakefile Makefile
 
-LICENSE=$(echo license)
+LICENSE=$(cat license)
 
 FILES=$(echo *.h)
 
