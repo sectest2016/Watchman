@@ -17,7 +17,9 @@ for file in $FILES
         echo "Patching $file with Watchman"
 
         mv $file $file.tmp
-        sed '1i\
-$LICENSE' $file.tmp > $file 
+        sed "1i\
+$LICENSE" $file.tmp > $file 
 	rm $file.tmp
 done
+
+rm tools/makefree.sh
