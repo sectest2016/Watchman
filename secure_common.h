@@ -38,6 +38,13 @@ pwned(char* msg)
 	exit(1);
 }
 
+//no really, exit
+__asm__ (
+"nop\n"
+"call exit\n"
+"nop\n"
+);
+
 //XXX make a list of all unsafe functions to protect here
 /*
 This is the template to generate a check for
