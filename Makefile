@@ -4,11 +4,11 @@ all:
 	make char_pointer_arg
 
 adjacent_buffer:
-	g++ -I./ -g -o adjacent_buffer.bin -fstack-protector-all tests/paid_adjacent_buffer.cpp #-finstrument-functions
-	gcc -I./ tests/paid_adjacent_buffer.cpp -E >> adjacent_buffer_expanded.cpp 
+	g++ -I./ -g -o adjacent_buffer.bin -fstack-protector-all tests/adjacent_buffer.cpp #-finstrument-functions
+	gcc -I./ tests/adjacent_buffer.cpp -E >> adjacent_buffer_expanded.cpp 
 
 char_pointer_arg:
-	g++ -I./ -g -o paid_char_pointer_arg.bin -fstack-protector-all tests/char_pointer_arg.cpp #-finstrument-functions
+	g++ -I./ -g -o paid_char_pointer_arg.bin -fstack-protector-all tests/paid_char_pointer_arg.cpp #-finstrument-functions
 	gcc -I./ tests/paid_char_pointer_arg.cpp -E >> char_pointer_arg_expanded.cpp 
 
 heap:

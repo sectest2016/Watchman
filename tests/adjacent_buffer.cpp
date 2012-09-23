@@ -6,7 +6,7 @@
 #include "watchman.h"
 
 int a(){
-    SHOTGUN_STACK_COOKIES;
+    SHOTGUN_STACK_COOKIES_CHAR;
     char buff_bad[25] = "aaaaaaaaaa/bin/sh";
     //TODO if these are the same size, the shotgun method fails
     char buff[10];

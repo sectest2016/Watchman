@@ -5,17 +5,24 @@
 //-----------------------------
 #warning "SUPER_AGGRESSIVE_STACK_CHECKING on, this may impact performance"
 
+//TODO initialize stack cookie bytes
+#define MANUAL_STACK_COOKIE_INIT \
+srand(time(NULL)); \
+executionCanary = rand() % UINT_MAX;
+
 //option 1, precesion but more modifications to original code
 //TODO calculate how large we can actually make this?
 //TODO this doesn't actually work yet
 #define MANUAL_STACK_COOKIE(buffer) \
 char ___COOKIE##buffer[sizeof(_x)/sizeof(_x[0])] = { 0x00, 0xff, 0xff, 0xff };
 
+//XXX use prime number lengths for cookies?
+
 //option 2, brute force
 //XXX generate random numbers
 //FIXME use mprotect? http://en.wikibooks.org/wiki/C_Programming/POSIX_Reference/sys/mman.h/mprotect
 //FIXME also look at http://www.kernel.org/doc/man-pages/online/pages/man2/mprotect.2.html
-#define SHOTGUN_STACK_COOKIES \
+#define SHOTGUN_STACK_COOKIES_CHAR \
 int ___numCookies = 7; \
 char ___COOKIE4[4] = { 0x00, 0xff, 0xff, 0xff }; \
 char ___COOKIE6[6] = { 0x00, 0xff, 0xff, 0xff }; \

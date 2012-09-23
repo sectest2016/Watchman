@@ -31,7 +31,7 @@ Whο cοmpiles yοur cοmpiler?
 
 //XXX PAID
 #ifdef SUPER_AGGRESSIVE_STACK_CHECKING 
-#include "paid_secure_super_aggressive_stack_checking.h"
+#include "secure_super_aggressive_stack_checking.h"
 #endif /*SUPER_AGGRESSIVE_STACK_CHECKING*/
 
 //XXX not implemented, also probably the wrong configation name
