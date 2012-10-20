@@ -3,24 +3,20 @@
 #include <dlfcn.h>
 #include <mcheck.h>
 
-#define ___MAX_CANARIES 10000
-#define ___MAX_HIBERNATION_CANARIES 100
-#define ___MAX_DEEP_HIBERNATION_CANARIES 100
-#define ___HIBERNATION_RATIO 100
-#define ___DEEP_HIBERNATION_RATIO 100
-unsigned long* ___canaries[___MAX_CANARIES];
-unsigned long* ___hibernation_canaries[___MAX_CANARIES];
-unsigned long* ___deep_hibernation_canaries[___MAX_CANARIES];
-int numCanaries = 0;
-//XXX test overflow system
-int canaryOverflow = 0;
+#include "secure_common.h"
+#include "paid_secure_heap_instrumentation_c.h"
 
+void debugWatchman(){
 
-
+}
 
 void *malloc(size_t size)
 {
-	puts("malloc(...)");
+	debugWatchman();
+	#ifdef DEBUG
+		puts("malloc(...)");
+	#endif
+
 	static void *(*mallocp)(size_t size);
 	char *error;
 	void *ptr;
@@ -35,22 +31,54 @@ void *malloc(size_t size)
 	}
 	ptr = mallocp(size);
 
-	printf("malloc(%d) = %p\n", size, ptr);     
+	#ifdef DEBUG
+		printf("malloc(%d) = %p\n", size, ptr);     
+	#endif
+
+	//**********************************************//
+	//**********************************************//
+	// Protected section				//
+	//**********************************************//
+	//**********************************************//
+	if(executionCanary == 0x0){
+		srand(time(NULL));
+		executionCanary = rand() % UINT_MAX;
+	}
 	if(numCanaries != ___MAX_CANARIES && canaryOverflow == 0){
-		*___canaries[numCanaries] = ptr;
-		numCanaries++;
+		___canaries[numCanaries] = (unsigned long*)mallocp(2*sizeof(unsigned long));
+		if (NULL != ___canaries[numCanaries]){ 
+			*___canaries[numCanaries] = executionCanary;
+			
+			#ifdef DEBUG_HEAP_CANARIES
+			printf("made heap canary %x @ 0x%x size %x\n", executionCanary, ___canaries[numCanaries], sizeof(unsigned long));
+			#endif //DEBUG_HEAP_CANARIES
+		  	
+			numCanaries++;
+		}
 	}
 	else{
 		canaryOverflow++;
 	}
-	printf("malloc(%d) = %p\n", size, ptr);     
+	//**********************************************//
+	//**********************************************//
+	// End protected section			//
+	//**********************************************//
+	//**********************************************//
+
+	#ifdef DEBUG
+		printf("malloc(%d) = %p\n", size, ptr);     
+	#endif
 
 	return ptr;
 }
 
 void free(void *ptr)
 {
+	debugWatchman();
+	#ifdef DEBUG
 	puts("free(...)");
+	#endif
+
 	static void (*freep)(void *);
 	char *error;
 
@@ -63,21 +91,44 @@ void free(void *ptr)
 		}
 	}
 
+	#ifdef DEBUG
+		puts("checking heap magic");
+	#endif
+	
+	//**********************************************//
+	//**********************************************//
+	// Protected section				//
+	//**********************************************//
+	//**********************************************//
+	if(numCanaries != 0 && numCanaries != ___MAX_CANARIES && canaryOverflow == 0){	
+//		printf("\t%x :: %x\t", *___canaries[numCanaries-1], executionCanary);
+		if(*___canaries[numCanaries-1] != executionCanary){
+			//pwned("heap smashing detected");
+			puts("heap smashing detected\n");
+			exit(1);
+		}
+		//XXX getting stuff like *** glibc detected *** ./heap.bin: free(): invalid pointer: 0x09653028 *** here
+		freep(___canaries[numCanaries-1]);
 
-	puts("checking heap magic");
-	if(numCanaries != ___MAX_CANARIES && canaryOverflow == 0){
+		#ifdef DEBUG_HEAP_CANARIES
+		//printf("freed heap canary %x @ 0x%x\n", executionCanary, ___canaries[numCanaries-1]);
+		#endif //DEBUG_HEAP_CANARIES
+
+		___canaries[numCanaries-1] = 0x0;
 		numCanaries--;
-		mcheck_status corrupt = mprobe(ptr);
 	}
 	else{
 		canaryOverflow--;
 	}
+	//**********************************************//
+	//**********************************************//
+	// End protected section			//
+	//**********************************************//
+	//**********************************************//
 
-	puts("free(");
-	//char ptrChr[64];
-	//itoa((long)ptr, ptrChr, 16);
-	//puts(ptrChr);
-	puts(")\n");
+	#ifdef DEBUG
+		puts("freed\n");
+	#endif
 
 	freep(ptr);
 }
