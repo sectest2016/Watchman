@@ -18,8 +18,8 @@ Whο cοmpiles yοur cοmpiler?
 //#define AGGRESSIVE_HEAP_CHECKING
 
 //more parts of the library
-#include "secure_manual_stack_check.h"
-#include "secure_common.h"
+#include "manual_stack_check.h"
+#include "common.h"
 
 #ifdef STACK_CHECKING 
 #include "stack_check.h"

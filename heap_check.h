@@ -1,9 +1,21 @@
-//-----------------------------
-//-----------------------------
-//function instrumentation?
-//-----------------------------
-//-----------------------------
-//turn on "-finstrument-functions" to use these
+/*
+Watchman - A memory corruption detection and security system for GCC.
+Copyright (C) 2012 Eric Wimberley
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
 #include <stdlib.h>
 #include <time.h>
 #include <limits.h>
@@ -25,6 +37,7 @@
 static unsigned int executionCanary = 0x0;
 static int lastTime = 0;
 void sig_handler(int);
+void check_all_canaries();
 
 class ___Canary{
 unsigned int canary;
@@ -56,18 +69,21 @@ int canaryOverflow = 0;
 void heap_check(){
 	pid_t pID = fork();
 	if(pID == 0){
+		signal(SIGSEGV, sig_handler);
+		signal(SIGABRT, sig_handler);
+		signal(SIGTERM, sig_handler);
 		printf("Forked...\n");
 		srand(time(NULL));
 		executionCanary = rand() % UINT_MAX;
 		printf("%x\n", executionCanary);
 		//TODO check for terminate signal
 		while(true){
-			signal(SIGSEGV, sig_handler);
-			if(time(NULL) > lastTime + 10){
+			if(time(NULL) > lastTime + 0){
 				lastTime = time(NULL);
-				printf("%i\n", time(NULL));
+				//printf("%i\n", time(NULL));
 				//slow this down
 				//new_heap_check();
+				check_all_canaries();
 			}
 		}
 		exit(0);
@@ -97,7 +113,10 @@ void new_heap_check() {
 
 void check_all_canaries() {
 	//printf("EXIT:  %p, from %p\n", this_fn, call_site);
-	if(numCanaries != ___MAX_CANARIES && canaryOverflow == 0){
+	for(int i = 0; i < numCanaries; i++){
+		canaries[i]->check();
+	}
+	/*if(numCanaries != ___MAX_CANARIES && canaryOverflow == 0){
 		canaries[numCanaries-1]->check();  
 		free(canaries[numCanaries-1]);
 		canaries[numCanaries-1] = 0x0;
@@ -105,16 +124,20 @@ void check_all_canaries() {
 	}
 	else{
 		canaryOverflow--;
-	}
+	}*/
 }
 
 void sig_handler(int sig) {
-    switch (sig) {
-    case SIGTERM:
-        abort();
-    default:
-        abort();
-    }
+	switch (sig) {
+	case SIGTERM:
+		abort();
+	case SIGABRT:
+		abort();
+	case SIGSEGV:
+		abort();
+	default:
+		abort();
+	}
 }
 
 static void *(*old_malloc_hook)(size_t, const void *);
@@ -135,4 +158,5 @@ static void init_my_hooks(void) {
     __malloc_hook = new_malloc_hook;
 }
 
-void (*__malloc_initialize_hook)(void) = init_my_hooks;
+//FIXME why is volatile keyword required here?
+void (* volatile __malloc_initialize_hook)(void) = init_my_hooks;
