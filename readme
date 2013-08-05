@@ -18,3 +18,10 @@ Clone a repository
 
 git clone git@github.com:ewimberley/Watchman.git
 
+To build Watchman:
+
+make
+
+To cleanup after a build
+
+make clean
