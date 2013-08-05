@@ -37,31 +37,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 static unsigned int executionCanary = 0x0;
 static int lastTime = 0;
 void sig_handler(int);
-void check_all_canaries();
-
-class ___Canary{
-unsigned int canary;
-
-public:
-	
-	___Canary() __attribute__ ((no_instrument_function));
-
-	void check() __attribute__ ((no_instrument_function));
-};
-
-___Canary :: ___Canary() 
-{
-	canary = executionCanary;
-}
-
-void ___Canary :: check()
-{
-	if(executionCanary != canary){
-		pwned("heap smashing detected");
-	}
-}
-
-___Canary* canaries[___MAX_CANARIES];
+unsigned long* ___canaries[___MAX_CANARIES];
 int numCanaries = 0;
 //XXX test overflow system
 int canaryOverflow = 0;
@@ -83,7 +59,6 @@ void heap_check(){
 				//printf("%i\n", time(NULL));
 				//slow this down
 				//new_heap_check();
-				check_all_canaries();
 			}
 		}
 		exit(0);
@@ -98,12 +73,12 @@ void heap_check(){
 }
 
 void new_heap_check() {
-	//printf("ENTER: %p, from %p\n", this_fn, call_site);
 	//TODO optimize this branch as unlikely (only happens once)
-	if(executionCanary == 0x0){
-	}
 	if(numCanaries != ___MAX_CANARIES && canaryOverflow == 0){
-		canaries[numCanaries] = new ___Canary();  
+		___canaries[numCanaries] = (unsigned long*)malloc(2*sizeof(unsigned long));
+		#ifdef DEBUG_HEAP_CANARIES
+		printf("made heap canary %x @ 0x%x size %x\n", executionCanary, ___canaries[numCanaries], sizeof(unsigned long));
+		#endif /*DEBUG_HEAP_CANARIES*/
 	  	numCanaries++;
 	}
 	else{
@@ -112,19 +87,10 @@ void new_heap_check() {
 }
 
 void check_all_canaries() {
-	//printf("EXIT:  %p, from %p\n", this_fn, call_site);
 	for(int i = 0; i < numCanaries; i++){
-		canaries[i]->check();
+		//canaries[i]->check();
+		//___canaries[i]...
 	}
-	/*if(numCanaries != ___MAX_CANARIES && canaryOverflow == 0){
-		canaries[numCanaries-1]->check();  
-		free(canaries[numCanaries-1]);
-		canaries[numCanaries-1] = 0x0;
-		numCanaries--;
-	}
-	else{
-		canaryOverflow--;
-	}*/
 }
 
 void sig_handler(int sig) {
@@ -143,20 +109,39 @@ void sig_handler(int sig) {
 static void *(*old_malloc_hook)(size_t, const void *);
 
 static void *new_malloc_hook(size_t size, const void *caller) {
-    void *mem;
-
-    __malloc_hook = old_malloc_hook;
-    mem = malloc(size);
-    fprintf(stderr, "%p: malloc(%zu) = %p\n", caller, size, mem);
-    __malloc_hook = new_malloc_hook;
-
-    return mem;
+    	void *mem;
+	__malloc_hook = old_malloc_hook;
+	mem = malloc(size);
+	new_heap_check();
+    	fprintf(stderr, "%p: malloc(%zu) = %p\n", caller, size, mem);
+    	__malloc_hook = new_malloc_hook;
+    	return mem;
 }
 
 static void init_my_hooks(void) {
-    old_malloc_hook = __malloc_hook;
-    __malloc_hook = new_malloc_hook;
+    	old_malloc_hook = __malloc_hook;
+    	__malloc_hook = new_malloc_hook;
 }
 
-//FIXME why is volatile keyword required here?
+//FIXME why is volatile keyword required here? we need to detect when this is required
 void (* volatile __malloc_initialize_hook)(void) = init_my_hooks;
+
+void __cyg_profile_func_enter(void *this_fn, void *call_site)
+                              __attribute__((no_instrument_function));
+
+void __cyg_profile_func_enter(void *this_fn, void *call_site) {
+	//printf("ENTER: %p, from %p\n", this_fn, call_site);
+	for(int i = 0; i < numCanaries; i++){
+		//printf("Checking canary %i\n", i);
+		if(*___canaries[i] != executionCanary){
+                	pwned("heap smashing detected");
+        	}
+        }
+}
+
+void __cyg_profile_func_exit(void *this_fn, void *call_site)
+                             __attribute__((no_instrument_function));
+
+void __cyg_profile_func_exit(void *this_fn, void *call_site) {
+	printf("EXIT:  %p, from %p\n", this_fn, call_site);
+}
