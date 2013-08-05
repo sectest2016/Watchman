@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define HEAP_CHECKING
-#include "watchman.h"
+//#define SUPER_AGGRESSIVE_HEAP_CHECKING_C
+//#define SUPER_AGGRESSIVE_HEAP_CHECKING_CPP
+//#include "watchman.h"
 
 class Test{
 public:
@@ -33,7 +34,6 @@ char command[10];
 };
 
 int main(){
-	heap_check();
 	Test* aTest = new Test();
 	Command* c1 = new Command();
 	Command* c2 = new Command();
