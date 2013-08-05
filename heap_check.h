@@ -8,7 +8,8 @@
 #include <time.h>
 #include <limits.h>
 #include <unistd.h>
-#include <sys/types.h>
+#include <malloc.h>
+#include <signal.h>
 
 //option 1
 //XXX pull down pointers to common malloc functions
@@ -23,6 +24,7 @@
 #define ___MAX_CANARIES 10000
 static unsigned int executionCanary = 0x0;
 static int lastTime = 0;
+void sig_handler(int);
 
 class ___Canary{
 unsigned int canary;
@@ -60,6 +62,7 @@ void heap_check(){
 		printf("%x\n", executionCanary);
 		//TODO check for terminate signal
 		while(true){
+			signal(SIGSEGV, sig_handler);
 			if(time(NULL) > lastTime + 10){
 				lastTime = time(NULL);
 				printf("%i\n", time(NULL));
@@ -105,4 +108,31 @@ void check_all_canaries() {
 	}
 }
 
+void sig_handler(int sig) {
+    switch (sig) {
+    case SIGTERM:
+        abort();
+    default:
+        abort();
+    }
+}
 
+static void *(*old_malloc_hook)(size_t, const void *);
+
+static void *new_malloc_hook(size_t size, const void *caller) {
+    void *mem;
+
+    __malloc_hook = old_malloc_hook;
+    mem = malloc(size);
+    fprintf(stderr, "%p: malloc(%zu) = %p\n", caller, size, mem);
+    __malloc_hook = new_malloc_hook;
+
+    return mem;
+}
+
+static void init_my_hooks(void) {
+    old_malloc_hook = __malloc_hook;
+    __malloc_hook = new_malloc_hook;
+}
+
+void (*__malloc_initialize_hook)(void) = init_my_hooks;
