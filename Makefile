@@ -7,7 +7,7 @@ all:
 #	gcc -g -shared -o watchman.so watchman.o
 
 unprotected_heap:
-	g++ -I./ -g -o unprotected_heap.bin -fstack-protector-all tests/paid_unprotected_heap.cpp -finstrument-functions 
+	g++ -I./ -g -o unprotected_heap.bin -fstack-protector-all tests/unprotected_heap.cpp -finstrument-functions 
 
 clean:
 	rm -f *.bin *.o *.so *_expanded.cpp 

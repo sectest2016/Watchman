@@ -27,13 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //XXX pull down pointers to common malloc functions
 //XXX only setup heap canaries when those are called?
 
-//option 2
-//XXX can I detect if this is an object function or not?
-
-//option 3 
-//XXX only do this every other function call
-
 #define ___MAX_CANARIES 10000
+static FILE* out = fopen("/dev/tty", "w");
 static unsigned int executionCanary = 0x0;
 static int lastTime = 0;
 void sig_handler(int);
@@ -86,13 +81,6 @@ void new_heap_check() {
 	}
 }
 
-void check_all_canaries() {
-	for(int i = 0; i < numCanaries; i++){
-		//canaries[i]->check();
-		//___canaries[i]...
-	}
-}
-
 void sig_handler(int sig) {
 	switch (sig) {
 	case SIGTERM:
@@ -134,7 +122,8 @@ void __cyg_profile_func_enter(void *this_fn, void *call_site) {
 	for(int i = 0; i < numCanaries; i++){
 		//printf("Checking canary %i\n", i);
 		if(*___canaries[i] != executionCanary){
-                	pwned("heap smashing detected");
+			fprintf(out, "*** Watchman: heap smashing detected ***: program terminated\n");
+			exit(1);
         	}
         }
 }

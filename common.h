@@ -28,24 +28,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define UNSAFE_SIZEOF(array) (sizeof(array)/sizeof(*(array)))
 
-//XXX if instrumentation is not enabled, this line should not be in the compilation
-void pwned(char* msg) __attribute__((no_instrument_function));
-
-void
-__attribute__ ((noreturn))
-pwned(char* msg)
-{
-	FILE* out = fopen("/dev/tty", "w");
-	fprintf(out, "*** Watchman: %s ***: program terminated\n", msg);
+//void
+//__attribute__ ((noreturn))
+//pwned(char* msg)
+//{
+#define PWNED \
+	FILE* out = fopen("/dev/tty", "w"); \
+	fprintf(out, "*** Watchman: %s ***: program terminated\n", msg); \
 	exit(1);
-}
+//}
 
-//no really, exit
-__asm__ (
-"nop\n"
-"call exit\n"
-"nop\n"
-);
+//might need this?
+//__asm__ (
+//"nop\n"
+//"call exit\n"
+//"nop\n"
+//);
 
 //XXX make a list of all unsafe functions to protect here
 /*
