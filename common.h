@@ -28,6 +28,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #define UNSAFE_SIZEOF(array) (sizeof(array)/sizeof(*(array)))
 
+//XXX if instrumentation is not enabled, this line should not be in the compilation
+void pwned(char* msg) __attribute__((no_instrument_function));
+
 void
 __attribute__ ((noreturn))
 pwned(char* msg)
