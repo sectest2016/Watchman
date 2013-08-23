@@ -1,4 +1,27 @@
-This is the Watchman security framework. More documentation to come.
+Watchman - A memory corruption detection and security system for GCC.
+Copyright (C) 2012 Eric Wimberley
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
+---------------------------------------------------------------------------------
+
+This is the Watchman security framework. Watchman adds more random numbers to 
+the heap and stack and checks them more frequently than existing security systems.
+If you are compiling C and C++ code where security matters more than performance
+then the Watchman framework is a good tradeoff to make. Watchman is still in alpha,
+and is not ready for production.
 
 create a new repository on the command line
 
@@ -14,7 +37,7 @@ Push an existing repository from the command line
 git remote add origin https://github.com/ewimberley/Watchman.git
 git push -u origin master
 
-Clone a repository
+Clone the repository
 
 git clone git@github.com:ewimberley/Watchman.git
 
