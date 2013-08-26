@@ -33,7 +33,7 @@ char command[10];
 };
 
 int main(){
-	heap_check();
+	//heap_check();
 	Test* aTest = new Test();
 	Command* c1 = new Command();
 	Command* c2 = new Command();
