@@ -160,6 +160,10 @@ void __cyg_profile_func_enter(void *this_fn, void *call_site) {
 			exit(1);
         	}
         }*/
+	struct heapList *next = heapStart;
+	while(next != 0x0){
+		next = next->next;
+	}
 }
 
 void __cyg_profile_func_exit(void *this_fn, void *call_site)
