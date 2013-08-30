@@ -50,4 +50,17 @@ int main(){
 	c4->a();
 	delete c4;
 	delete aTest;
+	delete c1;
+
+
+	for(int j = 0; j < 1000; j++){
+		c1 = new Command();
+		c2 = new Command();
+		c3 = new Command();
+		c4 = new Command();
+		delete c1;
+		delete c2;
+		delete c3;
+		delete c4;
+	}
 }
